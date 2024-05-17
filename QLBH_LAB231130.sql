@@ -120,6 +120,8 @@ FROM orders
 INNER JOIN orderdetail ON orders.oID = orderdetail.oID
 INNER JOIN product ON orderdetail.pID = product.pID
 GROUP BY oID;
+
+SELECT * FROM Sales;
 9. Xóa tất cả các ràng buộc khóa ngoại, khóa chính của tất cả các bảng:
 ALTER TABLE orderdetail
     DROP FOREIGN KEY orderdetail_ibfk_1,
