@@ -115,11 +115,14 @@ GROUP BY oID;
 
 8. Tạo một view tên là Sales để hiển thị tổng doanh thu của siêu thị:
 CREATE VIEW Sales AS
-SELECT orders.oID, oDate, SUM(odQTY*pPrice) AS oTotalPrice
-FROM orders
-INNER JOIN orderdetail ON orders.oID = orderdetail.oID
-INNER JOIN product ON orderdetail.pID = product.pID
-GROUP BY oID;
+SELECT SUM(odQTY*pPrice) AS TotalSales
+FROM Orders
+JOIN OrderDetails ON Orders.oID = OrderDetails.oID
+JOIN Products ON OrderDetails.pID = Products.pID
+
+
+SELECT * FROM Sales
+
 
 SELECT * FROM Sales;
 9. Xóa tất cả các ràng buộc khóa ngoại, khóa chính của tất cả các bảng:
