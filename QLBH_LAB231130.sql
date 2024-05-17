@@ -116,9 +116,9 @@ GROUP BY oID;
 8. Tạo một view tên là Sales để hiển thị tổng doanh thu của siêu thị:
 CREATE VIEW Sales AS
 SELECT SUM(odQTY*pPrice) AS TotalSales
-FROM Orders
-JOIN OrderDetails ON Orders.oID = OrderDetails.oID
-JOIN Products ON OrderDetails.pID = Products.pID
+FROM orders
+JOIN orderdetail ON orders.oID = orderdetail.oID
+JOIN product ON orderdetail.pID = product.pID
 
 
 SELECT * FROM Sales
@@ -154,18 +154,16 @@ DELIMITER ;
 11.Tạo một stored procedure tên là delProduct nhận vào 1 tham số là tên của một sản phẩm, strored procedure này sẽ xóa sản phẩm có tên được truyên
 vào thông qua tham số, và các thông tin liên quan đến sản phẩm đó ở trong bảng OrderDetail:
 DELIMITER //
-CREATE PROCEDURE delProduct(IN input_pName VARCHAR(25))
+CREATE PROCEDURE delProduct(IN pName VARCHAR(25))
 BEGIN
     DECLARE pID INT;
-    SELECT pID INTO pID
-    FROM product
-    WHERE pName = input_pName;
-    DELETE FROM orderdetail
-    WHERE pID = pID;
-    DELETE FROM product
-    WHERE pName = input_pName;
-END;
-//
+
+    SELECT product.pID INTO pID FROM product WHERE product.pName = pName;
+
+    DELETE FROM product WHERE product.pID = pID;
+
+    DELETE FROM orderdetail WHERE orderdetail.pID = pID;
+END;//
 DELIMITER ;
 
 --GỌI PROCEDURE
